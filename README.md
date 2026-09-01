@@ -4,19 +4,6 @@ Repositório acadêmico destinado ao registro dos estudos, anotações, exercíc
 
 ---
 
-## Informações da Disciplina
-
-| Informação    | Detalhes                       |
-| ------------- | ------------------------------ |
-| Curso         | Ciência da Computação          |
-| Instituição   | Centro Universitário UDF       |
-| Semestre      | 6º semestre                    |
-| Período       | 2026/2                         |
-| Disciplina    | Linguagens Formais e Autômatos |
-| Carga horária | 60 horas                       |
-
----
-
 ## Conteúdos
 
 A disciplina aborda os fundamentos teóricos e práticos relacionados às linguagens formais, autômatos e modelos computacionais.
