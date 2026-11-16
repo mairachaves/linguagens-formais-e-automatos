@@ -1,8 +1,7 @@
 from datetime import datetime
 from copy import deepcopy
 
-# SISTEMA ESPECIALISTA ESCOLAR 3.0 - Python / Google Colab
-# Dados demonstrativos. Estoque e historico persistem somente durante a sessao.
+
 PRODUTOS_INICIAIS = {
     1: {"nome": "Lápis Faber-Castell HB", "tipo": "lapis_hb", "preco": 4.50, "estoque": 0},
     2: {"nome": "Lápis BIC HB", "tipo": "lapis_hb", "preco": 2.50, "estoque": 20},
