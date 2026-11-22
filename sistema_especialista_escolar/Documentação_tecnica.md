@@ -120,3 +120,36 @@ A busca de economia é heurística e pode não encontrar a combinação de menor
 Não há banco de dados, autenticação, interface web nem persistência de estoque entre execuções. 
 Entradas inválidas são tratadas em funções específicas, mas não há suíte automatizada de testes no arquivo. 
 Como evolução, recomenda-se separar catálogo, regras, inferência e interface em módulos; adicionar cadastro e atributos estruturados (marca, tamanho, unidade); implementar testes automatizados; persistir dados em SQLite; e criar interface web sem alterar a lógica de decisão. 
+13. Conclusão 
+O Sistema Especialista Escolar 3.0 demonstra a aplicação prática de regras SE–ENTÃO em uma situação cotidiana de compra. O motor de inferência combina fatos de estoque, orçamento e quantidade para produzir recomendações explicáveis, enquanto o controle de estados e a revalidação antes da finalização reduzem o risco de confirmar decisões desatualizadas. O projeto atende ao objetivo didático de demonstrar tomada de decisão baseada em conhecimento explícito, com limitações compatíveis com um protótipo acadêmico. 
+ Evidências a anexar antes da entrega 
+
+1️⃣ Consultar o catálogo 
+Digite: 1 
+
+ 
+Catalogo 
+
+
+2️⃣ Iniciar uma compra 
+Digite: 2 
+
+ 
+3️⃣ Adicionar um produto 
+Digite: 3 
+
+ 
+4️⃣ Executar a análise SE–ENTÃO 
+Digite: 7 
+ 
+Finalizar a compra 
+Digite: 8 
+
+ 
+relatório TXT gerado 
+
+ 
+Fonte do projeto: arquivo Python “sistema_especialista_escolar_corrigido.py”, disponibilizado pelo(a) aluno(a). Documentação elaborada com base no código-fonte da versão 3.0. 
+ 
+Sistema Especialista Escolar 3.0  •  Documentação técnica e funcional 
+ 
