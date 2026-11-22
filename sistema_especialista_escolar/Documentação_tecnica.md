@@ -38,128 +38,58 @@ Consistência: a análise simula a reserva de estoque sem alterar o estoque real
 Persistência limitada: estoque, regras e histórico são mantidos em memória durante a execução; o último relatório de compra é salvo em arquivo TXT. 
 5. Estrutura da solução 
 O código organiza a aplicação em funções e estruturas de dados globais. Não há classes nem módulos separados nesta versão; a separação é lógica, por responsabilidade. 
-Componente 
- 	Representação no código 
- 	Responsabilidade 
- 
-Base de fatos 
- 	PRODUTOS_INICIAIS / produtos 
- 	Catálogo: nome, tipo, preço e estoque por código. 
- 
-Memória de trabalho 
- 	compra 
- 	Orçamento, itens, análise e estado da compra corrente. 
- 
-Base de regras 
- 	regras e condições do motor 
- 	Limite por produto e critérios de seleção, substituição e aprovação. 
- 
-Motor de inferência 
- 	motor_inferencia(itens, orcamento) 
- 	Avalia fatos, aplica regras e retorna recomendação, pendências, total e trilha. 
- 
-Interface 
- 	menu() e funções auxiliares 
- 	Interação por terminal. 
- 
-Histórico / saída 
- 	historico e ultimo_relatorio.txt 
- 	Registro em memória e relatório da última compra finalizada. 
+| Componente | Representação no Código | Responsabilidade |
+|---|---|---|
+| Base de fatos | `PRODUTOS_INICIAIS / produtos` | Catálogo: nome, tipo, preço e estoque por código. |
+| Memória de trabalho | `compra` | Orçamento, itens, análise e estado da compra atual. |
+| Base de regras | `regras` e condições do motor | Limite por produto e critérios de seleção, substituição e aprovação. |
+| Motor de inferência | `motor_inferencia(itens, orcamento)` | Avalia fatos, aplica regras e retorna recomendação, pendências, total e trilha. |
+| Interface | `menu()` e funções auxiliares | Interação por terminal. |
+| Histórico / saída | `historico` e `ultimo_relatorio.txt` | Registro em memória e relatório da última compra finalizada. |
  
 5.1 Fluxo geral de processamento 
 Iniciar compra → adicionar/editar itens → analisar → (se necessário) ajustar carrinho, orçamento ou regras → analisar novamente → confirmar → atualizar estoque e registrar compra. A análise não desconta o estoque real; o desconto ocorre apenas na finalização confirmada. 
 6. Regras de negócio e inferência 
 O motor utiliza encadeamento para frente: parte dos fatos conhecidos (itens solicitados, preços, estoque, orçamento e limite) e executa condições para chegar à recomendação. A trilha de inferência registra os passos relevantes. 
-Regra 
- 	Condição SE 
- 	Ação ENTÃO 
- 
-Limite 
- 	Quantidade solicitada > limite configurado 
- 	Marcar item como pendente e exigir ajuste. 
- 
-R1 
- 	Estoque do item solicitado ≥ quantidade 
- 	Manter produto solicitado. 
- 
-R2/R3 
- 	Estoque insuficiente e existe equivalente do mesmo tipo com estoque suficiente 
- 	Selecionar o equivalente de menor preço. 
- 
-R4 
- 	Não existe equivalente disponível em quantidade suficiente 
- 	Marcar item como pendente. 
- 
-R5 
- 	Total recomendado > orçamento 
- 	Tentar substituir itens por equivalentes mais baratos com estoque suficiente. 
- 
-R6 
- 	Todos os itens atendidos, carrinho não vazio e total ≤ orçamento 
- 	Aprovar recomendação; caso contrário, não aprovar. 
+
+| Regra | Condição SE | Ação ENTÃO |
+|:---:|---|---|
+| Limite | Quantidade solicitada > limite configurado | Marcar item como pendente e exigir ajuste. |
+| R1 | Estoque do item solicitado ≥ quantidade | Manter produto solicitado. |
+| R2/R3 | Estoque insuficiente e existe equivalente do mesmo tipo com estoque suficiente | Selecionar o equivalente de menor preço. |
+| R4 | Não existe equivalente disponível em quantidade suficiente | Marcar item como pendente. |
+| R5 | Total recomendado > orçamento | Tentar substituir itens por equivalentes mais baratos com estoque suficiente. |
+| R6 | Todos os itens atendidos, carrinho não vazio e total ≤ orçamento | Aprovar recomendação; caso contrário, não aprovar. |
  
 Equivalência é definida pelo campo “tipo”, e não por marca ou tamanho em campos separados. A escolha inicial de alternativa prioriza o menor preço disponível; a etapa R5 tenta reduções adicionais, mas não garante a combinação global de menor custo possível. A aprovação exige ausência de pendências e valor dentro do orçamento. 
 6.1 Exemplo de raciocínio 
 Fatos: pedido de 2 unidades do produto 1 (Lápis Faber-Castell HB), estoque 0, orçamento de R$ 20,00. R1 identifica indisponibilidade; R2/R3 buscam itens do tipo lapis_hb com estoque suficiente e selecionam o produto 3 (Lápis Genérico HB), por R$ 1,50 a unidade. Total recomendado: R$ 3,00. Sem pendências, R6 aprova a recomendação. 
+
 7. Máquina de estados 
-Estado 
- 	Significado 
- 
-CARRINHO_ABERTO 
- 	Compra iniciada ou modificada; requer análise. 
- 
-EM_ANALISE 
- 	Processamento da inferência. 
- 
-AGUARDANDO_CONFIRMACAO 
- 	Análise aprovada; cliente pode confirmar. 
- 
-AJUSTE_NECESSARIO 
- 	Análise não aprovada; há restrição a resolver. 
- 
-COMPRA_FINALIZADA 
- 	Estado atribuído imediatamente antes de limpar a compra corrente. 
+| Estado | Significado |
+|---|---|
+| CARRINHO_ABERTO | Compra iniciada ou modificada; requer análise. |
+| EM_ANALISE | Processamento da inferência. |
+| AGUARDANDO_CONFIRMACAO | Análise aprovada; cliente pode confirmar. |
+| AJUSTE_NECESSARIO | Análise não aprovada; há restrição a resolver. |
+| COMPRA_FINALIZADA | Estado atribuído imediatamente antes de limpar a compra corrente. |
  
 Alterações de itens, estoque ou limite invalidam a análise anterior e retornam o estado para CARRINHO_ABERTO. Antes de finalizar, o motor recalcula a recomendação para evitar confirmar um resultado desatualizado. Após uma finalização bem-sucedida, a variável compra é redefinida para None. 
 8. Funcionalidades do menu 
-Opção 
- 	Ação 
- 
-1 
- 	Consultar catálogo 
- 
-2 
- 	Iniciar compra 
- 
-3 
- 	Adicionar produto ao carrinho 
- 
-4 
- 	Remover produto do carrinho 
- 
-5 
- 	Alterar quantidade 
- 
-6 
- 	Visualizar carrinho 
- 
-7 
- 	Analisar compra (SE–ENTÃO) 
- 
-8 
- 	Finalizar compra 
- 
-9 
- 	Repor estoque 
- 
-10 
- 	Histórico de compras 
- 
-11 
- 	Alterar regra (demonstração) 
- 
-0 
- 	Sair 
+| Opção | Ação |
+|:---:|---|
+| 1 | Consultar catálogo |
+| 2 | Iniciar compra |
+| 3 | Adicionar produto ao carrinho |
+| 4 | Remover produto do carrinho |
+| 5 | Alterar quantidade |
+| 6 | Visualizar carrinho |
+| 7 | Analisar compra (SE–ENTÃO) |
+| 8 | Finalizar compra |
+| 9 | Repor estoque |
+| 10 | Histórico de compras |
+| 11 | Alterar regra (demonstração) |
+| 0 | Sair |
  
 9. Cenários de teste e resultados esperados 
 Os cenários abaixo foram definidos a partir das regras e dos dados iniciais do código. São resultados esperados por inspeção da implementação; não representam evidência de execução capturada em tela. 
@@ -190,38 +120,3 @@ A busca de economia é heurística e pode não encontrar a combinação de menor
 Não há banco de dados, autenticação, interface web nem persistência de estoque entre execuções. 
 Entradas inválidas são tratadas em funções específicas, mas não há suíte automatizada de testes no arquivo. 
 Como evolução, recomenda-se separar catálogo, regras, inferência e interface em módulos; adicionar cadastro e atributos estruturados (marca, tamanho, unidade); implementar testes automatizados; persistir dados em SQLite; e criar interface web sem alterar a lógica de decisão. 
-13. Conclusão 
-O Sistema Especialista Escolar 3.0 demonstra a aplicação prática de regras SE–ENTÃO em uma situação cotidiana de compra. O motor de inferência combina fatos de estoque, orçamento e quantidade para produzir recomendações explicáveis, enquanto o controle de estados e a revalidação antes da finalização reduzem o risco de confirmar decisões desatualizadas. O projeto atende ao objetivo didático de demonstrar tomada de decisão baseada em conhecimento explícito, com limitações compatíveis com um protótipo acadêmico. 
- Evidências a anexar antes da entrega 
-
-1️⃣ Consultar o catálogo 
-Digite: 1 
-![alt text](image-7.png)
- 
-Catalogo 
- ![alt text](image-6.png)
-
-2️⃣ Iniciar uma compra 
-Digite: 2 
- ![alt text](image-5.png)
- 
-3️⃣ Adicionar um produto 
-Digite: 3 
- ![alt text](image-3.png)
- ![alt text](image-4.png)
- 
-4️⃣ Executar a análise SE–ENTÃO 
-Digite: 7 
- ![alt text](image-2.png)
-
-Finalizar a compra 
-Digite: 8 
-![alt text](image-1.png)
- 
-relatório TXT gerado 
-![alt text](image.png)
- 
-Fonte do projeto: arquivo Python “sistema_especialista_escolar_corrigido.py”, disponibilizado pelo(a) aluno(a). Documentação elaborada com base no código-fonte da versão 3.0. 
- 
-Sistema Especialista Escolar 3.0  •  Documentação técnica e funcional 
- 
