@@ -17,41 +17,19 @@ Permitir alterações de estoque e de parâmetros de negócio, exigindo nova an�
 Confirmar compras aprovadas, atualizar estoque e registrar histórico e relatório. 
 4. Escopo e requisitos 
 Requisitos funcionais 
-ID	Requisito 
- 
-RF01 
- 	Consultar catálogo 
- 
-RF02 
- 	Iniciar compra com orçamento 
- 
-RF03 
- 	Adicionar itens ao carrinho 
- 
-RF04 
- 	Remover itens 
- 
-RF05 
- 	Alterar quantidade 
- 
-RF06 
- 	Visualizar carrinho 
- 
-RF07 
- 	Analisar compra por regras SE–ENTÃO 
- 
-RF08 
- 	Finalizar compra aprovada 
- 
-RF09 
- 	Repor estoque 
- 
-RF10 
- 	Consultar histórico da sessão 
- 
-RF11 
- 	Alterar limite máximo por produto 
- 
+| ID | Requisito |
+|:---:|---|
+| RF01 | Consultar catálogo |
+| RF02 | Iniciar compra com orçamento |
+| RF03 | Adicionar itens ao carrinho |
+| RF04 | Remover itens |
+| RF05 | Alterar quantidade |
+| RF06 | Visualizar carrinho |
+| RF07 | Analisar compra por regras SE–ENTÃO |
+| RF08 | Finalizar compra aprovada |
+| RF09 | Repor estoque |
+| RF10 | Consultar histórico da sessão |
+| RF11 | Alterar limite máximo por produto |
 4.2 Requisitos não funcionais 
 Implementação em Python, utilizando somente bibliotecas padrão (datetime e copy). 
 Interação por terminal, com menu numerado e entrada de dados pelo teclado. 
@@ -215,7 +193,7 @@ Como evolução, recomenda-se separar catálogo, regras, inferência e interface
 13. Conclusão 
 O Sistema Especialista Escolar 3.0 demonstra a aplicação prática de regras SE–ENTÃO em uma situação cotidiana de compra. O motor de inferência combina fatos de estoque, orçamento e quantidade para produzir recomendações explicáveis, enquanto o controle de estados e a revalidação antes da finalização reduzem o risco de confirmar decisões desatualizadas. O projeto atende ao objetivo didático de demonstrar tomada de decisão baseada em conhecimento explícito, com limitações compatíveis com um protótipo acadêmico. 
  Evidências a anexar antes da entrega 
- 
+
 1️⃣ Consultar o catálogo 
 Digite: 1 
 ![alt text](image-7.png)
