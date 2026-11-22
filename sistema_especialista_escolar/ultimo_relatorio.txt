@@ -1,0 +1,9 @@
+RELATÓRIO DO SISTEMA ESPECIALISTA
+Data: 15/11/2026 21:51
+2x Lápis Genérico HB
+Total: R$ 3,00
+
+REGRAS ACIONADAS:
+R1: estoque insuficiente. Fatos: produto=Lápis Faber-Castell HB; quantidade=2; estoque=0
+R2/R3: SE há equivalentes, ENTÃO escolher o mais barato disponível: Lápis Genérico HB.
+R6: SE todos os itens estão atendidos e total <= orçamento, ENTÃO aprovar recomendação.
