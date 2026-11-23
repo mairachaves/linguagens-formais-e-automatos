@@ -3,14 +3,14 @@ Documentação técnica, funcional e roteiro de demonstração
 Sistema Especialista Escolar 3.0 
 Documentação técnica e funcional  
 
-1. Resumo do projeto 
+## 1. Resumo do projeto 
 Este trabalho apresenta um sistema especialista, desenvolvido em Python, para apoiar a tomada de decisão na compra de materiais escolares. O programa recebe um orçamento e um carrinho de produtos, consulta o estoque e aplica regras condicionais SE–ENTÃO para recomendar a manutenção ou substituição de itens por equivalentes disponíveis e, quando necessário, mais econômicos. A versão analisada é a 3.0, com interface de terminal, execução local no VS Code ou em ambiente Python compatível, como o Google Colab. 
 O sistema também permite modificar o limite máximo por produto, repor estoque, acompanhar o estado da compra, registrar compras concluídas e gerar um relatório textual. Os valores e estoques do catálogo são demonstrativos; não há integração com loja ou banco de dados. 
 
-2. Problema e justificativa 
+## 2. Problema e justificativa 
 Ao adquirir uma lista escolar, o consumidor pode encontrar produtos indisponíveis, preços acima do orçamento e restrições de quantidade. Uma decisão manual exige comparar alternativas e verificar simultaneamente custo, equivalência e disponibilidade. O sistema organiza esses critérios em regras explícitas, tornando a recomendação rastreável por meio de uma trilha de explicações.
 
-3. Objetivos 
+## 3. Objetivos 
 Desenvolver um agente especialista baseado em regras SE–ENTÃO que auxilie a escolha de materiais escolares considerando estoque, equivalência de produto, orçamento e limites de quantidade. 
 Cadastrar uma compra com orçamento e itens solicitados. 
 Consultar o catálogo e verificar estoque disponível. 
@@ -20,7 +20,7 @@ Explicar quais regras foram acionadas e por que uma compra foi aprovada ou não.
 Permitir alterações de estoque e de parâmetros de negócio, exigindo nova análise. 
 Confirmar compras aprovadas, atualizar estoque e registrar histórico e relatório. 
 
-4. Escopo e requisitos 
+## 4. Escopo e requisitos 
 Requisitos funcionais 
 
 | ID | Requisito |
@@ -44,7 +44,7 @@ Explicabilidade: exibição de uma trilha textual das regras acionadas.
 Consistência: a análise simula a reserva de estoque sem alterar o estoque real. 
 Persistência limitada: estoque, regras e histórico são mantidos em memória durante a execução; o último relatório de compra é salvo em arquivo TXT. 
 
-5. Estrutura da solução 
+## ## 5. Estrutura da solução 
 O código organiza a aplicação em funções e estruturas de dados globais. Não há classes nem módulos separados nesta versão; a separação é lógica, por responsabilidade. 
 
 | Componente | Representação no Código | Responsabilidade |
@@ -59,7 +59,7 @@ O código organiza a aplicação em funções e estruturas de dados globais. Nã
  Fluxo geral de processamento 
 Iniciar compra → adicionar/editar itens → analisar → (se necessário) ajustar carrinho, orçamento ou regras → analisar novamente → confirmar → atualizar estoque e registrar compra. A análise não desconta o estoque real; o desconto ocorre apenas na finalização confirmada. 
 
-6. Regras de negócio e inferência 
+## 6. Regras de negócio e inferência 
 O motor utiliza encadeamento para frente: parte dos fatos conhecidos (itens solicitados, preços, estoque, orçamento e limite) e executa condições para chegar à recomendação. A trilha de inferência registra os passos relevantes. 
 
 | Regra | Condição SE | Ação ENTÃO |
@@ -76,7 +76,7 @@ Equivalência é definida pelo campo “tipo”, e não por marca ou tamanho em 
 Exemplo de raciocínio 
 Fatos: pedido de 2 unidades do produto 1 (Lápis Faber-Castell HB), estoque 0, orçamento de R$ 20,00. R1 identifica indisponibilidade; R2/R3 buscam itens do tipo lapis_hb com estoque suficiente e selecionam o produto 3 (Lápis Genérico HB), por R$ 1,50 a unidade. Total recomendado: R$ 3,00. Sem pendências, R6 aprova a recomendação. 
 
-7. Máquina de estados 
+## 7. Máquina de estados 
 
 | Estado | Significado |
 |---|---|
@@ -87,7 +87,7 @@ Fatos: pedido de 2 unidades do produto 1 (Lápis Faber-Castell HB), estoque 0, o
 | COMPRA_FINALIZADA | Estado atribuído imediatamente antes de limpar a compra corrente. |
  
 Alterações de itens, estoque ou limite invalidam a análise anterior e retornam o estado para CARRINHO_ABERTO. Antes de finalizar, o motor recalcula a recomendação para evitar confirmar um resultado desatualizado. Após uma finalização bem-sucedida, a variável compra é redefinida para None. 
-8. Funcionalidades do menu 
+## 8. Funcionalidades do menu 
 
 | Opção | Ação |
 |:---:|---|
