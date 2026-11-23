@@ -17,6 +17,7 @@ Permitir alterações de estoque e de parâmetros de negócio, exigindo nova an�
 Confirmar compras aprovadas, atualizar estoque e registrar histórico e relatório. 
 4. Escopo e requisitos 
 Requisitos funcionais 
+
 | ID | Requisito |
 |:---:|---|
 | RF01 | Consultar catálogo |
