@@ -126,25 +126,27 @@ O Sistema Especialista Escolar 3.0 demonstra a aplicação prática de regras SE
 
 1️⃣ Consultar o catálogo 
 Digite: 1 
-
+![alt text](image-7.png)
  
 Catalogo 
-
+![alt text](image-6.png)
 
 2️⃣ Iniciar uma compra 
 Digite: 2 
-
+![alt text](image-5.png)
  
 3️⃣ Adicionar um produto 
 Digite: 3 
-
+![alt text](image-3.png)
+![alt text](image-4.png)
  
 4️⃣ Executar a análise SE–ENTÃO 
 Digite: 7 
+![alt text](image-2.png)
  
 Finalizar a compra 
 Digite: 8 
-
+![alt text](image-1.png)
  
 relatório TXT gerado 
 ![alt text](image.png)
