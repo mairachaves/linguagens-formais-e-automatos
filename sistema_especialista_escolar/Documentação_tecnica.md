@@ -31,6 +31,7 @@ Requisitos funcionais
 | RF09 | Repor estoque |
 | RF10 | Consultar histórico da sessão |
 | RF11 | Alterar limite máximo por produto |
+
 4.2 Requisitos não funcionais 
 Implementação em Python, utilizando somente bibliotecas padrão (datetime e copy). 
 Interação por terminal, com menu numerado e entrada de dados pelo teclado. 
