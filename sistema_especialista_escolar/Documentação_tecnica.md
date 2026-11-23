@@ -68,6 +68,7 @@ Equivalência é definida pelo campo “tipo”, e não por marca ou tamanho em 
 Fatos: pedido de 2 unidades do produto 1 (Lápis Faber-Castell HB), estoque 0, orçamento de R$ 20,00. R1 identifica indisponibilidade; R2/R3 buscam itens do tipo lapis_hb com estoque suficiente e selecionam o produto 3 (Lápis Genérico HB), por R$ 1,50 a unidade. Total recomendado: R$ 3,00. Sem pendências, R6 aprova a recomendação. 
 
 7. Máquina de estados 
+
 | Estado | Significado |
 |---|---|
 | CARRINHO_ABERTO | Compra iniciada ou modificada; requer análise. |
