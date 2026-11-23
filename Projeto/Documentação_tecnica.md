@@ -1,7 +1,5 @@
-SISTEMA ESPECIALISTA PARA TOMADA DE DECISÃO NA COMPRA DE MATERIAL ESCOLAR 
-Documentação técnica, funcional e roteiro de demonstração 
-Sistema Especialista Escolar 3.0 
-Documentação técnica e funcional  
+# #SISTEMA ESPECIALISTA PARA TOMADA DE DECISÃO NA COMPRA DE MATERIAL ESCOLAR 
+
 
 ## 1. Resumo do projeto 
 Este trabalho apresenta um sistema especialista, desenvolvido em Python, para apoiar a tomada de decisão na compra de materiais escolares. O programa recebe um orçamento e um carrinho de produtos, consulta o estoque e aplica regras condicionais SE–ENTÃO para recomendar a manutenção ou substituição de itens por equivalentes disponíveis e, quando necessário, mais econômicos. A versão analisada é a 3.0, com interface de terminal, execução local no VS Code ou em ambiente Python compatível, como o Google Colab. 
