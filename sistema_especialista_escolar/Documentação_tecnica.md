@@ -44,7 +44,7 @@ Explicabilidade: exibição de uma trilha textual das regras acionadas.
 Consistência: a análise simula a reserva de estoque sem alterar o estoque real. 
 Persistência limitada: estoque, regras e histórico são mantidos em memória durante a execução; o último relatório de compra é salvo em arquivo TXT. 
 
-## ## 5. Estrutura da solução 
+## 5. Estrutura da solução 
 O código organiza a aplicação em funções e estruturas de dados globais. Não há classes nem módulos separados nesta versão; a separação é lógica, por responsabilidade. 
 
 | Componente | Representação no Código | Responsabilidade |
